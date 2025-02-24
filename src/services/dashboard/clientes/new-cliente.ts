@@ -1,5 +1,4 @@
-import { apiClient } from "../apiClient";
-
+import { apiClient } from "@/services/apiClient";
 
 interface Props {
     usuario_id: string;

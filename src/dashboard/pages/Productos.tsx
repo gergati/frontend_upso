@@ -1,11 +1,11 @@
 import { Products } from '@/interfaces/products.interfaces'
-import { getProducts } from '@/services/dashboard'
 import { RootState } from '@/store/store'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { NewProductos } from '../components/new-productos'
 import { DeleteIcon } from '../components/icons/DeleteIcon'
-import { deleteProductos } from '@/services/productos/delete-productos'
+import { getProducts } from '@/services/dashboard/productos/get-productos'
+import { deleteProductos } from '@/services/dashboard/productos/delete-productos'
 
 export const Productos = () => {
   const [products, setProducts] = useState<Products[]>([])
@@ -33,10 +33,9 @@ export const Productos = () => {
     fetchProducts();
   }, [datos?.usuario_id]);
 
-  const handleDelete = async (producto_id: number) => { // Recibe cliente_id como argumento
+  const handleDelete = async (producto_id: number) => {
     try {
-      await deleteProductos({ usuario_id, producto_id }); // Usa el cliente_id recibido
-      // Después de eliminar, recarga los clientes para actualizar la tabla
+      await deleteProductos({ usuario_id, producto_id });
       const response = await getProducts(datos.usuario_id);
       if (response) {
         setProducts(response);

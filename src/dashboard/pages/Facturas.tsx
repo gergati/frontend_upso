@@ -1,4 +1,4 @@
-import { getFacturaServicio } from "@/services/dashboard";
+import { getFacturaServicio } from "@/services/dashboard/facturaServicios/get-factura-servicios";
 import { RootState } from "@/store/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";

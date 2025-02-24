@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { newClientes } from "@/services/clientes/new-cliente"
+import { newClientes } from "@/services/dashboard/clientes/new-cliente"
 import { useState } from "react"
 
 

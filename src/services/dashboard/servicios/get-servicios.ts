@@ -1,5 +1,4 @@
-import { apiClient } from "../apiClient";
-
+import { apiClient } from "@/services/apiClient"
 
 
 export const getServicios = async (usuario_id: string) => {
@@ -7,9 +6,11 @@ export const getServicios = async (usuario_id: string) => {
     if (!usuario_id) return
     try {
         const token = localStorage.getItem('token')
+        const userId = usuario_id
         const response = await apiClient.get(`/usuario/${usuario_id}/servicios`, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                "user-id": userId
             }
         })
 

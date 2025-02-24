@@ -1,10 +1,10 @@
-import { getClientes } from "@/services/clientes/get-cliente"
+import { getClientes } from "@/services/dashboard/clientes/get-cliente"
 import { RootState } from "@/store/store"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { NewClientes } from "../components/new-clientes"
 import { DeleteIcon } from "../components/icons/DeleteIcon"
-import { deleteClientes } from "@/services/clientes/delete-clientes"
+import { deleteClientes } from "@/services/dashboard/clientes/delete-clientes"
 
 export const Clientes = () => {
   const [clientes, setClientes] = useState<any[]>([])
@@ -19,7 +19,7 @@ export const Clientes = () => {
         return;
       }
 
-      const response = await getClientes(datos.usuario_id);
+      const response = await getClientes(usuario_id);
       console.log("📦 Respuesta de la API:", response); // Log para ver la respuesta
 
       if (response) {
@@ -32,7 +32,7 @@ export const Clientes = () => {
     fetchProducts();
   }, [datos?.usuario_id]);
 
-  const handleDelete = async (cliente_id: string) => { // Recibe cliente_id como argumento
+  const handleDelete = async (cliente_id: string) => { 
     try {
       await deleteClientes({ usuario_id, cliente_id }); // Usa el cliente_id recibido
       // Después de eliminar, recarga los clientes para actualizar la tabla

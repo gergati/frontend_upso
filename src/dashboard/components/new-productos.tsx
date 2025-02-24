@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { newProductos } from "@/services/productos/new-productos"
+import { newProductos } from "@/services/dashboard/productos/new-productos"
 import { useState } from "react"
 
 

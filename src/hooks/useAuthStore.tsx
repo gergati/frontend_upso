@@ -1,4 +1,5 @@
-import { checkToken, login } from "@/services/auth";
+
+import { checkToken, login } from "@/services/auth/auth";
 import { onChecking, onLogin, onLogout } from "@/store/auth/authSlice";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";

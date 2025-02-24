@@ -1,10 +1,12 @@
-import { apiClient } from "./apiClient";
+
 
 
 // interface Props {
 //     username: string,
 //     password: string
 // }
+
+import { apiClient } from "../apiClient";
 
 export const login = async (username: string, password: string) => {
     try {
