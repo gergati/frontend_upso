@@ -8,6 +8,7 @@ export const Facturas = () => {
   const [facturaServicios, setFacturasServicio] = useState<any[]>([])
   const { datos } = useSelector((state: RootState) => state.auth)
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       if (!datos || !datos.usuario_id) {
@@ -15,7 +16,7 @@ export const Facturas = () => {
         return;
       }
 
-      const response = await getFacturaServicio(datos.usuario_id);
+      const response = await getFacturaServicio({ usuario_id: datos.usuario_id });
       console.log("📦 Respuesta de la API:", response); // Log para ver la respuesta
 
       if (response) {

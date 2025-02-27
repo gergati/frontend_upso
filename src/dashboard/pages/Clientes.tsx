@@ -1,58 +1,25 @@
-import { getClientes } from "@/services/dashboard/clientes/get-cliente"
-import { RootState } from "@/store/store"
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { NewClientes } from "../components/new-clientes"
+import { useEffect } from "react"
 import { DeleteIcon } from "../components/icons/DeleteIcon"
-import { deleteClientes } from "@/services/dashboard/clientes/delete-clientes"
+import { EditIcon } from "../components/icons/EditIcon"
+import { useDashboardStore } from "@/hooks/useDashboardStore"
+import { NewClientes } from "../components/new-clientes"
 
 export const Clientes = () => {
-  const [clientes, setClientes] = useState<any[]>([])
-  const { datos } = useSelector((state: RootState) => state.auth)
-
-  const { usuario_id } = datos;
-
+  const { clientes, mostrarClientes } = useDashboardStore()
+ 
   useEffect(() => {
-    const fetchProducts = async () => {
-      if (!datos || !datos.usuario_id) {
-        console.log("No recibe usuario_id");
-        return;
-      }
+    mostrarClientes()
+  }, [])
 
-      const response = await getClientes(usuario_id);
-      console.log("📦 Respuesta de la API:", response); // Log para ver la respuesta
-
-      if (response) {
-        setClientes(response); // Asegúrate de acceder correctamente a la propiedad 'products'
-      } else {
-        console.error("No se encontraron productos en la respuesta de la API");
-      }
-    };
-
-    fetchProducts();
-  }, [datos?.usuario_id]);
-
-  const handleDelete = async (cliente_id: string) => { 
-    try {
-      await deleteClientes({ usuario_id, cliente_id }); // Usa el cliente_id recibido
-      // Después de eliminar, recarga los clientes para actualizar la tabla
-      const response = await getClientes(datos.usuario_id);
-      if (response) {
-        setClientes(response);
-      } else {
-        console.error("No se encontraron clientes en la respuesta de la API");
-      }
-
-    } catch (error) {
-      console.error('Error al eliminar cliente:', error);
-    }
+  const handleDelete = async (cliente_id: string) => {
+    return cliente_id
   }
 
 
   return (
     <div className="overflow-x-auto font-rubik">
       <div>
-        <NewClientes usuario_id={datos.usuario_id} />
+        <NewClientes />
       </div>
       {clientes.length > 0 ? (
         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
@@ -76,7 +43,17 @@ export const Clientes = () => {
                 <td className="px-6 py-4 text-sm text-gray-600">{item.email}</td>
                 <td className="px-6 py-4 text-sm text-gray-600">{item.fechaNac}</td>
                 <td className="px-6 py-4 text-sm text-gray-600">{item.telefono}</td>
-                <td className="px-9 py-4 "><button className="hover:cursor-pointer" type="submit" onClick={() => handleDelete(item.cliente_id)}><DeleteIcon /></button>  </td>
+                <td className="px-4 py-4 ">
+                  <div className="flex gap-2">
+                    <button className="hover:cursor-pointer" type="submit" onClick={() => handleDelete(item.cliente_id)}><DeleteIcon /></button>
+                    <button
+                      className="hover:cursor-pointer"
+                    >
+                      <EditIcon />
+                    </button>
+                  </div>
+
+                </td>
               </tr>
             ))}
           </tbody>

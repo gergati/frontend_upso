@@ -1,10 +1,14 @@
 
 
-
-// interface Props {
-//     username: string,
-//     password: string
-// }
+interface Props {
+    nombre: string;
+    apellido: string;
+    dni: string;
+    email: string;
+    telefono: string;
+    contraseña: string;
+    tipo: string
+}
 
 import { apiClient } from "../apiClient";
 
@@ -33,5 +37,16 @@ export const checkToken = async () => {
     } catch (error) {
         console.error('Error token: ', error);
         throw error;
+    }
+}
+
+
+export const register = async ({ nombre, apellido, dni, email, telefono, contraseña, tipo }: Props) => {
+    try {
+        const response = await apiClient.post(`/usuario`, { nombre, apellido, dni, email, telefono, contraseña, tipo })
+        return response.data
+    } catch (error) {
+        console.error('Error al crear nuevo usuario => ', error)
+        throw error
     }
 }

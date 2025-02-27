@@ -12,9 +12,28 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { useState } from "react"
+import { useAuthStore } from "@/hooks/useAuthStore"
 
 
 export const RegisterForm = () => {
+
+    const [nombre, setNombre] = useState('')
+    const [apellido, setApellido] = useState('')
+    const [dni, setDni] = useState('')
+    const [email, setEmail] = useState('')
+    const [telefono, setTelefono] = useState('')
+    const [contraseña, setContraseña] = useState('')
+    const [tipo, setTipo] = useState('')
+    const { startRegister } = useAuthStore()
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        console.log('datos => ', { nombre, apellido, dni, email, telefono, contraseña, tipo })
+        startRegister({ nombre, apellido, dni, email, telefono, contraseña, tipo })
+    }
+
     return (
         <div className="flex w-full flex-col gap-6 font-rubik">
             <Card>
@@ -25,23 +44,27 @@ export const RegisterForm = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-6">
 
                             <div className="flex gap-2">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="firstName">Nombre</Label>
+                                    <Label htmlFor="nombre">Nombre</Label>
                                     <Input
-                                        id="firstName"
+                                        id="nombre"
+                                        value={nombre}
+                                        onChange={(e) => setNombre(e.target.value)}
                                         type="text"
                                         placeholder="Jhon"
                                         required
                                     />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="lasltName">Apellido</Label>
+                                    <Label htmlFor="apellido">Apellido</Label>
                                     <Input
-                                        id="lastName"
+                                        id="apellido"
+                                        value={apellido}
+                                        onChange={(e) => setApellido(e.target.value)}
                                         type="text"
                                         placeholder="Doe"
                                         required
@@ -54,15 +77,19 @@ export const RegisterForm = () => {
                                     <Label htmlFor="dni">Dni</Label>
                                     <Input
                                         id="dni"
-                                        type="number"
+                                        value={dni}
+                                        onChange={(e) => setDni(e.target.value)}
+                                        type="text"
                                         placeholder="11.111.111"
                                         required
                                     />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="phone">Teléfono</Label>
+                                    <Label htmlFor="telefono">Teléfono</Label>
                                     <Input
-                                        id="phone"
+                                        id="telefono"
+                                        value={telefono}
+                                        onChange={(e) => setTelefono(e.target.value)}
                                         type="tel"
                                         placeholder="2915136864"
                                         required
@@ -74,6 +101,8 @@ export const RegisterForm = () => {
                                 <Label htmlFor="email">Correo electronico</Label>
                                 <Input
                                     id="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     type="email"
                                     placeholder="johndoe@correo.com"
                                     required
@@ -81,7 +110,7 @@ export const RegisterForm = () => {
                             </div>
                             <div className="w-full flex gap-2 flex-col">
                                 <Label htmlFor="phone">Tipo de categoria</Label>
-                                <Select>
+                                <Select onValueChange={setTipo}>
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Selecciona una categoria" />
                                     </SelectTrigger>
@@ -100,9 +129,14 @@ export const RegisterForm = () => {
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Contraseña</Label>
+                                    <Label htmlFor="contraseña">Contraseña</Label>
                                 </div>
-                                <Input id="password" type="password" required placeholder="**********" />
+                                <Input
+                                    value={contraseña}
+                                    onChange={(e) => setContraseña(e.target.value)}
+                                    id="contraseña" type="password"
+                                    required placeholder="**********"
+                                />
                             </div>
                             <Button type="submit" className="w-full">
                                 Crear cuenta

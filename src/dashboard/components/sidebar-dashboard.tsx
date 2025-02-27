@@ -1,9 +1,9 @@
 import { Card } from "@/components/ui/card"
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
+// import {
+//     Avatar,
+//     AvatarFallback,
+//     AvatarImage,
+// } from "@/components/ui/avatar"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/store/store"
 import { LogoutIcon } from "./icons/LogoutIcon"
@@ -14,6 +14,7 @@ import { UserIcon } from "./icons/UserIcon"
 import { ProductsIcon } from "./icons/ProductsIcon"
 import { TicketIcon } from "./icons/TicketIcon"
 import { ServiciosIcon } from "./icons/ServiciosIcon"
+import { clearDashboardData } from "@/store/dashboard/dashboardSlice"
 
 
 
@@ -23,7 +24,9 @@ export const SidebarDashboard = () => {
     const navigate = useNavigate()
 
     const handleLogout = () => {
+        dispatch(clearDashboardData())
         dispatch(onLogout())
+        localStorage.clear()
         navigate('/login')
     }
 
@@ -38,12 +41,12 @@ export const SidebarDashboard = () => {
                     </div>
                     <Card className="w-full h-[50px] text-xs flex items-center justify-center m-auto my-5">
                         <div className="flex items-center justify-center gap-4">
-                            <Avatar>
+                            {/* <Avatar>
                                 <AvatarImage src="https://github.com/shadcn.pngs" />
                                 <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
+                            </Avatar> */}
                             <div className="flex flex-col">
-                                <p className="font-bold">{datos.nombre} {datos.apellido}</p>
+                                <p className="font-bold text-[14px]">{datos.nombre} {datos.apellido}</p>
                                 <span className="text-black/75">{datos.email}</span>
                             </div>
                         </div>

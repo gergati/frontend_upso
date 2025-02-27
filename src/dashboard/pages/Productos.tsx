@@ -1,51 +1,19 @@
-import { Products } from '@/interfaces/products.interfaces'
-import { RootState } from '@/store/store'
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { NewProductos } from '../components/new-productos'
+import { useEffect } from 'react'
 import { DeleteIcon } from '../components/icons/DeleteIcon'
-import { getProducts } from '@/services/dashboard/productos/get-productos'
-import { deleteProductos } from '@/services/dashboard/productos/delete-productos'
+import { useDashboardStore } from '@/hooks/useDashboardStore'
+import { NewProductos } from '../components/new-productos'
 
 export const Productos = () => {
-  const [products, setProducts] = useState<Products[]>([])
-  const { datos } = useSelector((state: RootState) => state.auth)
 
-  const { usuario_id } = datos;
+
+  const { mostrarProductos, productos } = useDashboardStore()
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      if (!datos || !datos.usuario_id) {
-        console.log("No recibe usuario_id");
-        return;
-      }
-
-      const response = await getProducts(datos.usuario_id);
-      console.log("📦 Respuesta de la API:", response); // Log para ver la respuesta
-
-      if (response) {
-        setProducts(response); // Asegúrate de acceder correctamente a la propiedad 'products'
-      } else {
-        console.error("No se encontraron productos en la respuesta de la API");
-      }
-    };
-
-    fetchProducts();
-  }, [datos?.usuario_id]);
+    mostrarProductos()
+  }, []);
 
   const handleDelete = async (producto_id: number) => {
-    try {
-      await deleteProductos({ usuario_id, producto_id });
-      const response = await getProducts(datos.usuario_id);
-      if (response) {
-        setProducts(response);
-      } else {
-        console.error("No se encontraron clientes en la respuesta de la API");
-      }
-
-    } catch (error) {
-      console.error('Error al eliminar cliente:', error);
-    }
+    return producto_id
   }
 
 
@@ -53,9 +21,9 @@ export const Productos = () => {
   return (
     <div className="overflow-x-auto font-rubik">
       <div>
-        <NewProductos usuario_id={datos.usuario_id} />
+        <NewProductos />
       </div>
-      {products.length > 0 ? (
+      {productos.length > 0 ? (
         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
           <thead>
             <tr className="bg-gray-100 text-left text-gray-600">
@@ -67,7 +35,7 @@ export const Productos = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((item) => (
+            {productos.map((item) => (
               <tr key={`${item.producto_id}-${item.descripcion}`} className="border-b">
                 <td className="px-6 py-4 text-sm text-gray-800">{item.nombreProd}</td>
                 <td className="px-6 py-4 text-sm text-gray-800">{item.descripcion}</td>

@@ -8,17 +8,15 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useDashboardStore } from "@/hooks/useDashboardStore"
-import { RootState } from "@/store/store"
+import { newClientes } from "@/services/dashboard/clientes/new-cliente"
 import { useState } from "react"
-import { useSelector } from "react-redux"
 
-export const NewClientes = () => {
 
-    const { datos } = useSelector((state: RootState) => state.auth)
-    const { usuario_id } = datos;
-    const { agregarNuevoCliente } = useDashboardStore()
+interface Props {
+    usuario_id: string;
+}
 
+export const updatedClientes = ({ usuario_id }: Props) => {
 
     const contraseña = ''
     const [apellido, setApellido] = useState('')
@@ -36,7 +34,7 @@ export const NewClientes = () => {
         setIsLoading(true);
         try {
 
-            await agregarNuevoCliente({ usuario_id, contraseña, apellido, dni, email, fechaNac, nombre, telefono })
+            await newClientes({ usuario_id, contraseña, apellido, dni, email, fechaNac, nombre, telefono })
 
             setTimeout(() => {
                 // Restablecer campos del formulario

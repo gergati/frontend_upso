@@ -10,14 +10,15 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { newProductos } from "@/services/dashboard/productos/new-productos"
+import { RootState } from "@/store/store"
 import { useState } from "react"
+import { useSelector } from "react-redux"
 
 
-interface Props {
-    usuario_id: string
-}
+export const NewProductos = () => {
 
-export const NewProductos = ({ usuario_id }: Props) => {
+    const { datos } = useSelector((state: RootState) => state.auth)
+    const { usuario_id } = datos;
 
     const [nombreProd, setNombreProd] = useState('')
     const [marca, setMarca] = useState('')
