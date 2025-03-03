@@ -4,29 +4,37 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { newClientes } from "@/services/dashboard/clientes/new-cliente"
-import { useState } from "react"
+import { useDashboardStore } from "@/hooks/useDashboardStore"
+import { useEffect, useState } from "react"
+import { modificarClientes } from "@/store/dashboard/dashboardSlice"
 
 
-interface Props {
-    usuario_id: string;
-}
+export const UpdatedClientes = ({ clientes, isOpen, onClose }: any) => {
+    const { modificarClientePorId, mostrarClientes } = useDashboardStore()
 
-export const updatedClientes = ({ usuario_id }: Props) => {
-
-    const contraseña = ''
     const [apellido, setApellido] = useState('')
     const [nombre, setNombre] = useState('')
     const [dni, setDni] = useState('')
     const [telefono, setTelefono] = useState('')
     const [email, setEmail] = useState('')
     const [fechaNac, setFechaNac] = useState('')
-    const [isLoading, setIsLoading] = useState(false); // Estado de carga
-    const [open, setOpen] = useState(false); // Estado del diálogo
+    const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (clientes) {
+            setApellido(clientes.apellido);
+            setNombre(clientes.nombre);
+            setDni(clientes.dni);
+            setTelefono(clientes.telefono);
+            setEmail(clientes.email);
+            setFechaNac(clientes.fechaNac)
+        }
+    }, [clientes])
+
 
 
     const handleSubmit = async (e: any) => {
@@ -34,20 +42,22 @@ export const updatedClientes = ({ usuario_id }: Props) => {
         setIsLoading(true);
         try {
 
-            await newClientes({ usuario_id, contraseña, apellido, dni, email, fechaNac, nombre, telefono })
+            const updatedCliente = {
+                ...clientes,
+                apellido,
+                nombre,
+                dni,
+                telefono,
+                email,
+                fechaNac,
+            };
 
-            setTimeout(() => {
-                // Restablecer campos del formulario
-                setApellido('');
-                setNombre('');
-                setDni('');
-                setTelefono('');
-                setEmail('');
-                setFechaNac(''); // Restablecer fecha de nacimiento
 
-                setOpen(false);
-                setIsLoading(false); // Ocultar el mensaje de carga después del tiempo simulado
-            }, 2000); // 2000 milisegundos = 2 segundos
+            await modificarClientePorId(updatedCliente);
+
+            modificarClientes(updatedCliente);
+
+            mostrarClientes()
 
         } catch (error) {
             console.error("Error al agregar producto:", error);
@@ -58,16 +68,12 @@ export const updatedClientes = ({ usuario_id }: Props) => {
     }
 
     return (
-        <Dialog>
-            <Button
+        <Dialog open={isOpen} onOpenChange={onClose}>
+            <DialogContent className="font-rubik"
                 onClick={() => setOpen(!open)}
-                className="hover:cursor-pointer my-3"
             >
-                <DialogTrigger className="hover:cursor-pointer">Agregar cliente</DialogTrigger>
-            </Button>
-            <DialogContent className="font-rubik">
                 <DialogHeader>
-                    <DialogTitle>Agregar cliente nuevo</DialogTitle>
+                    <DialogTitle>Editar cliente</DialogTitle>
 
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>

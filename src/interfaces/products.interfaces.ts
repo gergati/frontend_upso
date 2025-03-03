@@ -9,12 +9,12 @@ export interface Products {
     usuario:     Usuario;
 }
 
-export interface Cliente {
+interface Cliente {
     cliente_id: number;
     nombre:     string;
 }
 
-export interface Usuario {
+interface Usuario {
     nombre:     string;
     usuario_id: string;
 }

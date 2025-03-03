@@ -56,7 +56,6 @@ export const Servicios = () => {
         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
           <thead>
             <tr className="bg-gray-100 text-left text-gray-600">
-              <th className="px-6 py-3 text-sm font-medium">Nro servicio</th>
               <th className="px-6 py-3 text-sm font-medium">Servicio realizado</th>
               <th className="px-6 py-3 text-sm font-medium">Fecha</th>
               <th className="px-6 py-3 text-sm font-medium">Hora</th>
@@ -66,7 +65,6 @@ export const Servicios = () => {
           <tbody>
             {servicios.map((item) => (
               <tr key={`${item['id del servicio']}-${item.usuario_id}`} className="border-b">
-                <td className="px-6 py-4 text-sm text-gray-800">{item['id del servicio']}</td>
                 <td className="px-6 py-4 text-sm text-gray-800">{item['servicio realizado']}</td>
                 <td className="px-6 py-4 text-sm text-gray-800">{item.fecha}</td>
                 <td className="px-6 py-4 text-sm text-gray-600">{item.hora}</td>
@@ -76,7 +74,7 @@ export const Servicios = () => {
           </tbody>
         </table>
       ) : (
-        <p>No hay servicios disponibles.</p> // Mensaje cuando no hay productos
+        <p>No hay servicios disponibles.</p>
       )}
     </div>
   )
