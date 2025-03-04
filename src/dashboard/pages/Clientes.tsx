@@ -73,12 +73,11 @@ export const Clientes = () => {
                         <button
                           type="submit"
                           className="hover:cursor-pointer"
-                        // onClick={() => handleDelete(item.cliente_id)}
                         >
                           <DeleteIcon />
                         </button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent>
+                      <AlertDialogContent className="font-rubik">
                         <AlertDialogHeader>
                           <AlertDialogTitle>Estas seguro?</AlertDialogTitle>
                           <AlertDialogDescription>
@@ -94,11 +93,6 @@ export const Clientes = () => {
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
-                    {/* <button
-                      className="hover:cursor-pointer"
-                      onClick={() => handleDelete(item.cliente_id)}>
-                      <DeleteIcon />
-                    </button> */}
                     <button
                       onClick={() => handleEditar(item)}
                       className="hover:cursor-pointer"

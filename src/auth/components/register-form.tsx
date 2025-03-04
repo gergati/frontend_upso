@@ -114,7 +114,7 @@ export const RegisterForm = () => {
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Selecciona una categoria" />
                                     </SelectTrigger>
-                                    <SelectContent>
+                                    <SelectContent className="font-rubik">
                                         <SelectGroup>
                                             <SelectLabel>Categorias</SelectLabel>
                                             <SelectItem value="A">A</SelectItem>

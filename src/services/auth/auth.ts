@@ -1,5 +1,3 @@
-
-
 interface Props {
     nombre: string;
     apellido: string;
@@ -12,9 +10,9 @@ interface Props {
 
 import { apiClient } from "../apiClient";
 
-export const login = async (username: string, password: string) => {
+export const login = async (email: string, password: string) => {
     try {
-        const response = await apiClient.post('/login', { username, password })
+        const response = await apiClient.post('/login', { email, password })
         return response.data
 
     } catch (error) {

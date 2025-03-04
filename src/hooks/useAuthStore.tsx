@@ -1,5 +1,5 @@
 import { checkToken, login, register } from "@/services/auth/auth";
-import { onChecking, onLogin, onLogout } from "@/store/auth/authSlice";
+import { clearErrorMessage, onChecking, onLogin, onLogout } from "@/store/auth/authSlice";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -20,17 +20,16 @@ export const useAuthStore = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const startLogin = async (username: string, password: string) => {
+    const startLogin = async (email: string, password: string) => {
         dispatch(onChecking())
         try {
-            const data = await login(username, password)
+            const data = await login(email, password)
             const { datos } = data;
             localStorage.setItem('token', datos.token)
-
             dispatch(onLogin(datos))
             navigate('/dashboard')
         } catch (error) {
-            dispatch(onLogout())
+            dispatch(onLogout('Error al iniciar sesión'))
         }
     }
 
@@ -38,8 +37,7 @@ export const useAuthStore = () => {
         const token = localStorage.getItem('token');
 
         if (!token) {
-            console.log('No token found, logging out...');
-            return dispatch(onLogout());
+            return dispatch(onLogout(''));
         }
 
         try {
@@ -58,7 +56,7 @@ export const useAuthStore = () => {
         } catch (error) {
             console.error('Error durante la renovación del token:', error);
             localStorage.clear();
-            dispatch(onLogout());
+            dispatch(onLogout('Error de autenticación'));
         }
     };
 
@@ -71,9 +69,13 @@ export const useAuthStore = () => {
             dispatch(onLogin(data))
             navigate('/login')
         } catch (error) {
-            dispatch(onLogout())
+            dispatch(onLogout('Error al registrarse'))
         }
     }
+
+    const clearError = () => {
+        dispatch(clearErrorMessage());
+    };
 
 
 
@@ -84,6 +86,7 @@ export const useAuthStore = () => {
 
         startLogin,
         checkAuthToken,
-        startRegister
+        startRegister,
+        clearError
     }
 }

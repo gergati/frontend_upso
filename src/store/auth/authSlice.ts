@@ -14,7 +14,7 @@ export const authSlice = createSlice({
             email: ''
         },
         token: null,
-        errorMessage: undefined,
+        errorMessage: null,
     },
     reducers: {
         onChecking: (state) => {
@@ -29,7 +29,7 @@ export const authSlice = createSlice({
                 email: ''
             };
             state.token = null;
-            state.errorMessage = undefined;
+            state.errorMessage = null;
         },
         onLogin: (state, { payload }) => {
             state.status = 'authenticated';
@@ -43,9 +43,9 @@ export const authSlice = createSlice({
                 email: payload.email
             };
             state.token = payload.token;
-            state.errorMessage = undefined;
+            state.errorMessage = null;
         },
-        onLogout: (state) => {
+        onLogout: (state, { payload }) => {
             state.status = 'not-authenticated';
             state.datos = {
                 usuario_id: '',
@@ -57,9 +57,12 @@ export const authSlice = createSlice({
                 email: ''
             };
             state.token = null;
-            state.errorMessage = undefined;
+            state.errorMessage = payload || null;
         },
+        clearErrorMessage: (state) => {
+            state.errorMessage = null
+        }
     }
 });
 
-export const { onChecking, onLogin, onLogout } = authSlice.actions;
+export const { onChecking, onLogin, onLogout, clearErrorMessage } = authSlice.actions;
