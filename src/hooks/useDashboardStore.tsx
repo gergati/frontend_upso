@@ -3,7 +3,9 @@ import { getClientes } from "@/services/dashboard/clientes/get-cliente"
 import { newClientes } from "@/services/dashboard/clientes/new-cliente"
 import { updateClientes } from "@/services/dashboard/clientes/update-clientes"
 import { getProducts } from "@/services/dashboard/productos/get-productos"
-import { agregarCliente, eliminarCliente, modificarClientes, traerClientes, traerProductos } from "@/store/dashboard/dashboardSlice"
+import { newProductos } from "@/services/dashboard/productos/new-productos"
+import { updateProductos } from "@/services/dashboard/productos/update-productos"
+import { agregarCliente, agregarProducto, eliminarCliente, modificarClientes, modificarProductos, traerClientes, traerProductos } from "@/store/dashboard/dashboardSlice"
 import { RootState } from "@/store/store"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -20,6 +22,16 @@ interface ClienteProps {
     contraseña: string
 }
 
+interface ProductoProps {
+    usuario_id: string;
+    producto_id: string
+    nombreProd: string;
+    marca: string;
+    precio: string;
+    cantidad: string;
+    descripcion: string
+}
+
 
 
 export const useDashboardStore = () => {
@@ -29,6 +41,7 @@ export const useDashboardStore = () => {
     const { usuario_id } = datos;
     const { clientes, productos } = useSelector((state: RootState) => state.dashboard)
 
+    /* Clientes */
 
     const mostrarClientes = async () => {
         try {
@@ -73,6 +86,8 @@ export const useDashboardStore = () => {
 
     }
 
+    /* Productos */
+
     const mostrarProductos = async () => {
         try {
             if (!datos.usuario_id) return
@@ -80,6 +95,28 @@ export const useDashboardStore = () => {
             dispatch(traerProductos(response))
         } catch (error) {
             console.error('Error al obtener los productos => ', error)
+        }
+    }
+
+    const agregarNuevoProducto = async ({ usuario_id, cantidad, descripcion, marca, nombreProd, precio }: ProductoProps) => {
+        try {
+            if (!datos.usuario_id) return;
+            const response = await newProductos({ cantidad, descripcion, marca, nombreProd, precio, usuario_id })
+            dispatch(agregarProducto(response))
+        } catch (error) {
+            console.log('Error al agregar producto => ', error)
+        }
+
+    }
+
+    const modificarProductosPorId = async ({ usuario_id, producto_id, cantidad, descripcion, marca, nombreProd, precio }: ProductoProps) => {
+        try {
+            if (!usuario_id) return
+            const response = await updateProductos({ usuario_id, producto_id, cantidad, descripcion, marca, nombreProd, precio })
+            dispatch(modificarProductos(response))
+        } catch (error) {
+            console.log('Error al modificar los productos => ', error)
+            throw error
         }
     }
 
@@ -95,5 +132,7 @@ export const useDashboardStore = () => {
         modificarClientePorId,
         eliminarClientePorId,
         mostrarProductos,
+        agregarNuevoProducto,
+        modificarProductosPorId
     }
 }

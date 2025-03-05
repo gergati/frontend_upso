@@ -38,6 +38,17 @@ export const dashboardSlice = createSlice({
         traerProductos: (state, { payload }) => {
             state.productos = payload;
         },
+        agregarProducto: (state, { payload }) => {
+            state.productos.push(payload)
+        },
+        modificarProductos: (state, { payload }) => {
+            state.productos = state.productos.map(producto => {
+                if (producto.producto_id === payload.producto_id) {
+                    return payload
+                }
+                return producto
+            })
+        },
         clearDashboardData: (state) => {
             state.clientes = [];
             // state.services = [];
@@ -48,4 +59,4 @@ export const dashboardSlice = createSlice({
 })
 
 
-export const { traerClientes, modificarClientes, agregarCliente, eliminarCliente, clearDashboardData, traerProductos, } = dashboardSlice.actions;
+export const { traerClientes, modificarClientes, agregarCliente, eliminarCliente, clearDashboardData, traerProductos, agregarProducto, modificarProductos } = dashboardSlice.actions;

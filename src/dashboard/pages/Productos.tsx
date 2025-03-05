@@ -1,12 +1,19 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { DeleteIcon } from '../components/icons/DeleteIcon'
 import { useDashboardStore } from '@/hooks/useDashboardStore'
 import { NewProductos } from '../components/new-productos'
+import {
+  AlertDialog, AlertDialogAction,
+  AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+  AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { EditIcon } from '../components/icons/EditIcon'
+import { UpdatedProductos } from '../components/updated-productos'
 
 export const Productos = () => {
-
-
   const { mostrarProductos, productos } = useDashboardStore()
+  const [productoAEditar, setProductoAEditar] = useState(null)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   useEffect(() => {
     mostrarProductos()
@@ -14,6 +21,16 @@ export const Productos = () => {
 
   const handleDelete = async (producto_id: number) => {
     return producto_id
+  }
+
+  const handleEditar = (producto: any) => {
+    setProductoAEditar(producto)
+    setIsDialogOpen(true)
+  }
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false)
+    setProductoAEditar(null)
   }
 
 
@@ -41,13 +58,54 @@ export const Productos = () => {
                 <td className="px-6 py-4 text-sm text-gray-800">{item.descripcion}</td>
                 <td className="px-6 py-4 text-sm text-gray-600">{item.marca}</td>
                 <td className="px-6 py-4 text-sm text-gray-600">${item.precio}</td>
-                <td className="px-9 py-4 "><button className="hover:cursor-pointer" type="submit" onClick={() => handleDelete(item.producto_id)}><DeleteIcon /></button>  </td>
+                <td className="px-9 py-4 ">
+                  <div className="flex gap-2">
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button
+                          type="submit"
+                          className="hover:cursor-pointer"
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="font-rubik">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Estas seguro?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Esta acción es irrevocable.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="hover:cursor-pointer bg-red-500 hover:bg-red-700"
+                            onClick={() => handleDelete(item.producto_id)}
+                          >Eliminar</AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                    <button
+                      onClick={() => handleEditar(item)}
+                      className="hover:cursor-pointer"
+                    >
+                      <EditIcon />
+                    </button>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
         <p>No hay productos disponibles.</p>
+      )}
+      {productoAEditar && (
+        <UpdatedProductos
+          productos={productoAEditar}
+          isOpen={isDialogOpen}
+          onClose={handleDialogClose}
+        />
       )}
     </div>
 

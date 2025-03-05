@@ -1,10 +1,5 @@
 import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useDashboardStore } from "@/hooks/useDashboardStore"
@@ -60,7 +55,7 @@ export const UpdatedClientes = ({ clientes, isOpen, onClose }: any) => {
             mostrarClientes()
 
         } catch (error) {
-            console.error("Error al agregar producto:", error);
+            console.error("Error al agregar cliente:", error);
         } finally {
             setIsLoading(false)
         }

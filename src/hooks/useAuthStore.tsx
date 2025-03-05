@@ -56,7 +56,7 @@ export const useAuthStore = () => {
         } catch (error) {
             console.error('Error durante la renovación del token:', error);
             localStorage.clear();
-            dispatch(onLogout('Error de autenticación'));
+            dispatch(onLogout(''));
         }
     };
 

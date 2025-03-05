@@ -4,17 +4,7 @@ import { useDashboardStore } from "@/hooks/useDashboardStore"
 import { NewClientes } from "../components/new-clientes"
 import { UpdatedClientes } from "../components/updated-clientes"
 import { EditIcon } from "../components/icons/EditIcon"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, } from "@/components/ui/alert-dialog"
 
 export const Clientes = () => {
   const { clientes, mostrarClientes, eliminarClientePorId } = useDashboardStore()
