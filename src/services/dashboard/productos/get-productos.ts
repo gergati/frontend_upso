@@ -4,7 +4,7 @@ import { apiClient } from "@/services/apiClient";
 
 export const getProducts = async (usuario_id?: string) => {
     if (!usuario_id) {
-        console.error("❌ Error: usuario_id es undefined o null");
+        console.error("Error: usuario_id es undefined o null");
         return null; 
     }
 
@@ -19,7 +19,7 @@ export const getProducts = async (usuario_id?: string) => {
         });
         return response.data;
     } catch (error) {
-        console.error("❌ Error en getProducts:", error);
+        console.error("Error en getProducts:", error);
         return null;
     }
 }

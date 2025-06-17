@@ -29,7 +29,7 @@ export const useAuthStore = () => {
             dispatch(onLogin(datos))
             navigate('/dashboard')
         } catch (error) {
-            dispatch(onLogout('Error al iniciar sesión'))
+            dispatch(onLogout())
         }
     }
 
@@ -37,7 +37,7 @@ export const useAuthStore = () => {
         const token = localStorage.getItem('token');
 
         if (!token) {
-            return dispatch(onLogout(''));
+            return dispatch(onLogout());
         }
 
         try {
@@ -56,7 +56,7 @@ export const useAuthStore = () => {
         } catch (error) {
             console.error('Error durante la renovación del token:', error);
             localStorage.clear();
-            dispatch(onLogout(''));
+            dispatch(onLogout());
         }
     };
 
@@ -69,7 +69,7 @@ export const useAuthStore = () => {
             dispatch(onLogin(data))
             navigate('/login')
         } catch (error) {
-            dispatch(onLogout('Error al registrarse'))
+            dispatch(onLogout())
         }
     }
 

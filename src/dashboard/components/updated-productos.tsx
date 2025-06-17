@@ -11,7 +11,7 @@ import { useEffect, useState } from "react"
 
 export const UpdatedProductos = ({ isOpen, onClose, productos }: any) => {
 
-  const { agregarNuevoProducto, mostrarProductos } = useDashboardStore()
+  const { modificarProductosPorId, mostrarProductos } = useDashboardStore()
 
   const [nombreProd, setNombreProd] = useState('')
   const [marca, setMarca] = useState('')
@@ -47,7 +47,7 @@ export const UpdatedProductos = ({ isOpen, onClose, productos }: any) => {
         descripcion
       }
 
-      await agregarNuevoProducto(updatedProduct)
+      await modificarProductosPorId(updatedProduct)
 
       modificarProductos(updatedProduct)
       mostrarProductos()
@@ -71,9 +71,9 @@ export const UpdatedProductos = ({ isOpen, onClose, productos }: any) => {
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="name">Nombre</Label>
+              <Label htmlFor="nombre">Nombre</Label>
               <Input
-                id="name"
+                id="nombre"
                 type="text"
                 value={nombreProd}
                 onChange={(e) => setNombreProd(e.target.value)}

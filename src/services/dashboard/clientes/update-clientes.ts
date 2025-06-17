@@ -23,7 +23,6 @@ export const updateClientes = async ({ usuario_id, cliente_id, apellido, contras
                 "user-id": userId
             }
         })
-
         return response.data
     } catch (error) {
         console.error('Error al actualizar el cliente => ', error)

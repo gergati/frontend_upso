@@ -6,21 +6,20 @@ interface Props {
 
 export const getFacturaServicio = async ({ usuario_id }: Props) => {
     if (!usuario_id) {
-        console.error("❌ Error: usuario_id es undefined o null");
-        return null; // Retorna null en lugar de hacer la petición
+        console.error("Error: usuario_id es undefined o null");
+        return null;
     }
     try {
         const token = localStorage.getItem('token');
-        const response = await apiClient.get(`/usuario/${usuario_id}/facturaServicio`, {
+        const response = await apiClient.get(`/usuario/${usuario_id}/facturaServicio/${1}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
-                // user_id: `${usuario_id}`
+                user_id: `${usuario_id}`
             }
         });
-        console.log("📌 Respuesta de la API:", response.data);  // Agrega este log
         return response.data;
     } catch (error) {
-        console.error("❌ Error en facturaServicio:", error);
-        return null; // En lugar de lanzar error, retorna null para evitar que la app se rompa
+        console.error("Error en facturaServicio:", error);
+        return null;
     }
 }

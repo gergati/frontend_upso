@@ -1,9 +1,8 @@
 import { apiClient } from "@/services/apiClient";
 
-
 interface Props {
     usuario_id: string;
-    producto_id: number
+    producto_id: string
 }
 
 export const deleteProductos = async ({ usuario_id, producto_id }: Props) => {
@@ -18,7 +17,7 @@ export const deleteProductos = async ({ usuario_id, producto_id }: Props) => {
         })
         return response.data
     } catch (error) {
-        console.error('Error al eliminar => ', error)
+        console.error('Error al eliminar productos => ', error)
         throw error
     }
 }

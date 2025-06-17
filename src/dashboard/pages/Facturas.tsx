@@ -17,10 +17,9 @@ export const Facturas = () => {
       }
 
       const response = await getFacturaServicio({ usuario_id: datos.usuario_id });
-      console.log("📦 Respuesta de la API:", response); // Log para ver la respuesta
 
       if (response) {
-        setFacturasServicio(response); // Asegúrate de acceder correctamente a la propiedad 'products'
+        setFacturasServicio(response);
       } else {
         console.error("No se encontraron productos en la respuesta de la API");
       }
@@ -30,6 +29,11 @@ export const Facturas = () => {
   }, [datos?.usuario_id]);
   return (
     <div>
+      {
+        facturaServicios.length === 0 && (
+          <>No hay facturas</>
+        )
+      }
       {
         facturaServicios.map((item) => (
           <ul>

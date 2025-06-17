@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { newProductos } from "@/services/dashboard/productos/new-productos"
+import { useDashboardStore } from "@/hooks/useDashboardStore"
 import { RootState } from "@/store/store"
 import { useState } from "react"
 import { useSelector } from "react-redux"
@@ -17,6 +17,7 @@ import { useSelector } from "react-redux"
 
 export const NewProductos = () => {
 
+    const { agregarNuevoProducto } = useDashboardStore()
     const { datos } = useSelector((state: RootState) => state.auth)
     const { usuario_id } = datos;
 
@@ -25,16 +26,15 @@ export const NewProductos = () => {
     const [precio, setPrecio] = useState('')
     const [cantidad, setCantidad] = useState('')
     const [descripcion, setDescripcion] = useState('')
-    const [isLoading, setIsLoading] = useState(false); // Estado de carga
-    const [open, setOpen] = useState(false); // Estado del diálogo
+    const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         setIsLoading(true);
         try {
-            await newProductos({ usuario_id, cantidad, precio, marca, descripcion, nombreProd })
+            await agregarNuevoProducto({ usuario_id, cantidad, precio, marca, descripcion, nombreProd })
 
-            // Restablecer campos del formulario
             setNombreProd('');
             setMarca('');
             setPrecio('');
@@ -53,13 +53,14 @@ export const NewProductos = () => {
 
     return (
         <Dialog>
-            <Button
+            <DialogTrigger
+                asChild
                 onClick={() => setOpen(!open)}
                 className="hover:cursor-pointer my-3"
             >
-                <DialogTrigger className="hover:cursor-pointer">Agregar producto</DialogTrigger>
-            </Button>
-            <DialogContent className="font-rubik">
+                <Button className="hover:cursor-pointer">Agregar producto</Button>
+            </DialogTrigger>
+            <DialogContent aria-describedby={undefined} className="font-rubik w-[90%] m-auto">
                 <DialogHeader>
                     <DialogTitle>Agregar producto nuevo</DialogTitle>
 

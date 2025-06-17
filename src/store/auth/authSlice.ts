@@ -45,7 +45,7 @@ export const authSlice = createSlice({
             state.token = payload.token;
             state.errorMessage = null;
         },
-        onLogout: (state, { payload }) => {
+        onLogout: (state) => {
             state.status = 'not-authenticated';
             state.datos = {
                 usuario_id: '',
@@ -57,7 +57,6 @@ export const authSlice = createSlice({
                 email: ''
             };
             state.token = null;
-            state.errorMessage = payload || null;
         },
         clearErrorMessage: (state) => {
             state.errorMessage = null

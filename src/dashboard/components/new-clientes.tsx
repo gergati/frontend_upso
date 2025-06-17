@@ -27,8 +27,8 @@ export const NewClientes = () => {
     const [telefono, setTelefono] = useState('')
     const [email, setEmail] = useState('')
     const [fechaNac, setFechaNac] = useState('')
-    const [isLoading, setIsLoading] = useState(false); // Estado de carga
-    const [open, setOpen] = useState(false); // Estado del diálogo
+    const [isLoading, setIsLoading] = useState(false); 
+    const [open, setOpen] = useState(false);
 
 
     const handleSubmit = async (e: any) => {
@@ -39,17 +39,16 @@ export const NewClientes = () => {
             await agregarNuevoCliente({ usuario_id, contraseña, apellido, dni, email, fechaNac, nombre, telefono })
 
             setTimeout(() => {
-                // Restablecer campos del formulario
                 setApellido('');
                 setNombre('');
                 setDni('');
                 setTelefono('');
                 setEmail('');
-                setFechaNac(''); // Restablecer fecha de nacimiento
+                setFechaNac('');
 
                 setOpen(false);
-                setIsLoading(false); // Ocultar el mensaje de carga después del tiempo simulado
-            }, 2000); // 2000 milisegundos = 2 segundos
+                setIsLoading(false);
+            }, 2000);
 
         } catch (error) {
             console.error("Error al agregar producto:", error);
@@ -61,16 +60,16 @@ export const NewClientes = () => {
 
     return (
         <Dialog>
-            <Button
+            <DialogTrigger
+                asChild
                 onClick={() => setOpen(!open)}
                 className="hover:cursor-pointer my-3"
             >
-                <DialogTrigger className="hover:cursor-pointer">Agregar cliente</DialogTrigger>
-            </Button>
-            <DialogContent className="font-rubik">
+                <Button className="hover:cursor-pointer">Agregar cliente</Button>
+            </DialogTrigger>
+            <DialogContent aria-describedby={undefined} className="font-rubik w-[90%] m-auto rounded-lg">
                 <DialogHeader>
                     <DialogTitle>Agregar cliente nuevo</DialogTitle>
-
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-6">

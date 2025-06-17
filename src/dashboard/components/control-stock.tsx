@@ -3,21 +3,21 @@ import { ChartTooltip, ChartLegend, ChartLegendContent, ChartTooltipContent } fr
 import { ChartConfig, ChartContainer } from "@/components/ui/chart"
 
 const chartData = [
-    { month: "January", desktop: 186, mobile: 80 },
-    { month: "February", desktop: 305, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
+    { month: "January", productos: 186, facturacion: 80 },
+    { month: "February", productos: 305, facturacion: 200 },
+    { month: "March", productos: 237, facturacion: 120 },
+    { month: "April", productos: 73, facturacion: 190 },
+    { month: "May", productos: 209, facturacion: 130 },
+    { month: "June", productos: 214, facturacion: 140 },
 ]
 
 const chartConfig = {
     desktop: {
-        label: "Desktop",
+        label: "productos",
         color: "#2563eb",
     },
     mobile: {
-        label: "Mobile",
+        label: "facturacion",
         color: "#60a5fa",
     },
 } satisfies ChartConfig
@@ -27,7 +27,7 @@ const chartConfig = {
 export const ControlStock = () => {
     return (
         <div className="border border-black rounded-2xl">
-            <ChartContainer config={chartConfig} className="min-h-[200px] w-[500px]">
+            <ChartContainer config={chartConfig} className="min-h-[200px] w-[300px] md:w-[600px]">
                 <BarChart accessibilityLayer data={chartData}>
                     <CartesianGrid vertical={false} />
                     <XAxis
@@ -39,8 +39,8 @@ export const ControlStock = () => {
                     />
                     <ChartTooltip content={<ChartTooltipContent />} />
                     <ChartLegend content={<ChartLegendContent />} />
-                    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-                    <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+                    <Bar dataKey="productos" fill="var(--color-desktop)" radius={4} />
+                    <Bar dataKey="facturacion" fill="var(--color-mobile)" radius={4} />
                 </BarChart>
             </ChartContainer>
         </div>
